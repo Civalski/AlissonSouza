@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    .search-bar {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<div class="container">
+  <h2>Forum Route 66</h2>
+  <p><strong>Observação:</strong> Por este canal, agora é possível realizar consultas de problemas semelhantes, buscando por palavra-chave problemas que já foram solucionados.</p>
+  
+  <input type="text" id="searchInput" class="form-control search-bar" placeholder="Pesquise por palavra-chave...">
+  
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Quais gravadores (DVR) suportam câmeras 1080p Full HD?</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse in">
+        <div class="panel-body">A linha 1000 de gravadores da Intelbras, oferece suporte a câmeras Full HD, porém, com tamanho de imagem reduzida, ou seja, Full HD Lite. 
+          Para ter suporte completo a câmeras Full HD, é necessário utilizar gravadores da série 3000.
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">É possível utilizar alarme em centrais de cerca elétrica?</a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body">Sim. As centrais de cerca elétrica possuem capacidade de trabalharem também com sensores de alarme, já que ela também possui sistema de alarme
+          para quando o fio de inox da cerca elétrica é rompido.
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Quais os itens necessários para montar um orçamento de câmeras IP?</a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body">Os orçamentos de câmeras IP, são feitos com câmeras que possuem alimentação POE, ou seja; são alimentadas e passam dados por um mesmo cabo
+          sem a necessidade de fontes para as câmeras. Os itens essenciais são cabo de rede, NVR (gravador), câmeras da linha VIP, conectores RJ-45 (cat.5 ou cat.6 a depender do cabo)
+          e por fim um switch POE caso o NVD não possua as portas POE. Obs: Os modelos de NVD que possuem portas POE tem a sigla "P" "POE" no nome.
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>
+
+<script>
+  $(document).ready(function(){
+    $("#searchInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $(".panel").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

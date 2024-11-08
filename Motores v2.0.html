@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleção de Motor</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #cfd4d9;
+            color: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+        }
+        .logo img {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin-bottom: 40px;
+            color: #343434;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .option {
+            background-color: #ebe6e6;
+            padding: 1px 100px;
+            border-radius: 20px;
+            cursor: grab;
+            transition: transform 0.3s ease, background-color 0.3s ease; 
+            text-align: center;
+        }
+        .option:hover {
+            transform: scale(1.1);
+            background-color: #ffffff;
+        }
+        .option h2 {
+            color: #4b4b4b;
+        }
+        .option img {
+            width: 100px;
+            height: auto;
+            margin-top: 10px;
+        }
+        #loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 26, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .loader {
+            border: 8px solid #ffffff;
+            border-top: 8px solid #0000e7;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(500deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://bucket.route66.com.br/header_route66.png" alt="Route 66 Logo">
+            <img src="https://nice.com.br/novo2017/wp-content/uploads/2017/10/peccinin-logo-nice-group-cftv-clube.png" alt="Nice Logo">
+        </div>
+        <h1>Selecione o tipo de abertura do portão:</h1>
+        <div class="options">
+            <div class="option" id="basculante v2.0">
+                <h2>Basculante</h2>
+                <img src="https://nice.com.br/novo2017/wp-content/uploads/2017/12/bv-gatter-02.png" alt="Basculante IMG">
+            </div>
+            <div class="option" id="deslizante v2.0">
+                <h2>Deslizante</h2>
+                <img src="https://eletronicadoprofessor.com.br/admin/assets/upload/produtos/130/02a45e74e24b7b75d0c93f01c0df5c21317009a1.png" alt="Deslizante IMG">
+            </div>
+            <div class="option" id="pivotante v2.0">
+                <h2>Pivotante</h2>
+                <img src="https://static.wixstatic.com/media/0c2c24_b4782b162f4f4eba9c7b142107b183a6~mv2.png/v1/fill/w_545,h_375,al_c,q_85,usm_0.33_1.00_0.00,enc_auto/PIVO%20DUPLA.png" alt="Pivotante IMG">
+            </div>
+        </div>
+    </div>
+    <div id="loading-overlay">
+        <div class="loader"></div>
+    </div>
+    <script>
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.getElementById('loading-overlay').style.display = 'flex';
+                setTimeout(() => {
+                    const targetId = this.id;
+                    window.location.href = targetId + '.html';
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>

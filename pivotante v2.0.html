@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motores Pivotantes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+            width: 80%;
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+        .pivotante-gif {
+            max-width: 35%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        select {
+            width: 50%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .resultados {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .resultados h2, .resultados h3 {
+            margin-bottom: 10px;
+        }
+        .resultados p, .resultados ul {
+            margin-bottom: 10px;
+        }
+        .resultados ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        #motorImagem {
+            max-width: 180px; 
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        .footer-nav a {
+        color: #000000;
+        margin: 0 10px;
+        text-decoration: none;
+        }
+        .footer-nav a:hover {
+        text-decoration: underline;
+        }
+        .footer-content {
+        color: white
+        }
+        .minha-mensagem {
+            color: rgb(183, 11, 11)
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://www.attservicos.com.br/PORTAOTUBULAR_arquivos/animapivota1[1].gif" alt="GIF de pivotante" class="pivotante-gif">
+        <div class="form-group">
+            <label for="portaoPeso">Peso do Portão (kg):</label>
+            <select id="portaoPeso">
+                <option value="indiferente">Indiferente</option>
+                <option value="300">300kg</option>
+                <option value="350">350kg</option>
+                <option value="500">400kg</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="portaoAltura">Tamanho da folha (M):</label>
+            <select id="portaoAltura">
+                <option value="indiferente">Indiferente</option>
+                <option value="2.5">2,50 metros</option>
+                <option value="3.5">3,50 metros</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="aberturasHora">Aberturas por Hora:</label>
+            <select id="aberturasHora">
+                <option value="indiferente">Indiferente</option>
+                <option value="20">20 ciclos por hora</option>
+                <option value="60">60 ciclos por hora</option>
+                <option value="120">120 ciclos por hora</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="velocidadeMotor">Velocidade do Motor:</label>
+            <select id="velocidadeMotor">
+                <option value="indiferente">Indiferente</option>
+                <option value="rapido">Rápido (até 12 segundos)</option>
+                <option value="normal">Normal (acima de 12 segundos)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="voltagem">Voltagem:</label>
+            <select id="voltagem">
+                <option value="indiferente">Indiferente</option>
+                <option value="127">127V</option>
+                <option value="220">220V</option>
+            </select>
+        </div>
+        <button onclick="calcularMotorIdeal()">Calcular Motor Ideal</button>
+        <div id="resultados" class="resultados">
+            <h2 id="motorIdeal"></h2>
+            <img id="motorImagem" src="" alt="Imagem do Motor Ideal">
+            <h3>Outras opções de motores compatíveis:</h3>
+            <ul id="outrasOpcoes"></ul>
+            <p id="mensagemAdicional"></p>
+        </div>
+    </div>
+    <script>
+        const motores = [
+            { codigo: "21124", nome: "Alumínio Max (Duplo) 220V - 350KG - 1/3 HP - 29 Segundos", pesoMax: 350, hp: "1/3 HP", tempoAbertura: 29, aberturasHora: 60, voltagem: "220", AlturaMax: 3.5, imagem: "https://www.upperseg.com.br/img/products/automatizador-pivotante-golden-max-peccinin-1-3-hp-com-acionamento-duplo-75cm_1_650.webp" },
+            { codigo: "19448", nome: "Gatter (Duplo) 127V - 300KG - 1/4 HP - 12 Segundos", pesoMax: 300, hp: "1/4 HP", tempoAbertura: 12, aberturasHora: 20, voltagem: "127", AlturaMax: 3.5, imagem: "https://www.upperseg.com.br/img/products/automatizador-pivotante-golden-max-peccinin-1-3-hp-com-acionamento-duplo-75cm_1_650.webp" },
+            { codigo: "25504", nome: "Alumínio Max Flash (Duplo) 220V - 350KG - 1/2 HP - 15 Segundos", pesoMax: 350, hp: "1/2 HP", tempoAbertura: 15, aberturasHora: 60, voltagem: "220", AlturaMax: 3.5, imagem: "https://www.upperseg.com.br/img/products/automatizador-pivotante-golden-max-peccinin-1-3-hp-com-acionamento-duplo-75cm_1_650.webp" },
+            { codigo: "25502", nome: "Alumínio Super Flash (Duplo) 220V - 350KG - 1/2 HP - 8 Segundos", pesoMax: 350, hp: "1/2 HP", tempoAbertura: 8, aberturasHora: 60, voltagem: "220", AlturaMax: 2.5, imagem: "https://www.upperseg.com.br/img/products/automatizador-pivotante-golden-max-peccinin-1-3-hp-com-acionamento-duplo-75cm_1_650.webp" },
+            { codigo: "23781", nome: "Golden Super (Único) 220V - 500KG - 1/3 HP - 12 Segundos", pesoMax: 500, hp: "1/3 HP", tempoAbertura: 12, aberturasHora: 60, voltagem: "220", AlturaMax: 2.5, imagem: "https://d3nghyyw6zn7cw.cloudfront.net/Custom/Content/Products/09/26/0926_kit-simples-motor-pivotante-eletronico-max-golden-peccinin-1932_l1_637927902886373565.jpg" },
+            { codigo: "21889", nome: "Alumínio Max (Único) 220V - 350KG - 1/3 HP - 29 Segundos", pesoMax: 350, hp: "1/3 HP", tempoAbertura: 29, aberturasHora: 60, voltagem: "220", AlturaMax: 3.5, imagem: "https://d3nghyyw6zn7cw.cloudfront.net/Custom/Content/Products/09/26/0926_kit-simples-motor-pivotante-eletronico-max-golden-peccinin-1932_l1_637927902886373565.jpg" },
+            { codigo: "21886", nome: "Golden Max (Duplo) 220V - 350KG - 1/3 HP - 20 Segundos", pesoMax: 350, hp: "1/3 HP", tempoAbertura: 20, aberturasHora: 60, voltagem: "220", AlturaMax: 3.5, imagem: "https://www.upperseg.com.br/img/products/automatizador-pivotante-golden-max-peccinin-1-3-hp-com-acionamento-duplo-75cm_1_650.webp" },
+            { codigo: "21883", nome: "Alumínio Max (Único) 127V - 350KG - 1/3 HP - 29 Segundos", pesoMax: 350, hp: "1/3 HP", tempoAbertura: 29, aberturasHora: 60, voltagem: "127", AlturaMax: 3.5, imagem: "https://d3nghyyw6zn7cw.cloudfront.net/Custom/Content/Products/09/26/0926_kit-simples-motor-pivotante-eletronico-max-golden-peccinin-1932_l1_637927902886373565.jpg" },
+            { codigo: "21125", nome: "Alumínio Max (Duplo) 127V - 350KG - 1/3 HP - 29 Segundos", pesoMax: 350, hp: "1/3 HP", tempoAbertura: 29, aberturasHora: 60, voltagem: "127", AlturaMax: 3.5, imagem: "https://www.upperseg.com.br/img/products/automatizador-pivotante-golden-max-peccinin-1-3-hp-com-acionamento-duplo-75cm_1_650.webp" },
+            { codigo: "21121", nome: "Golden Super (Duplo) 127V - 500KG - 1/3 HP - 12 Segundos", pesoMax: 500, hp: "1/3 HP", tempoAbertura: 12, aberturasHora: 60, voltagem: "127", AlturaMax: 2.5, imagem: "https://www.upperseg.com.br/img/products/automatizador-pivotante-golden-max-peccinin-1-3-hp-com-acionamento-duplo-75cm_1_650.webp" },
+            { codigo: "19452", nome: "Golden Max (Duplo) 220V - 500KG - 1/3 HP - 20 Segundos", pesoMax: 500, hp: "1/3 HP", tempoAbertura: 20, aberturasHora: 60, voltagem: "220", AlturaMax: 3.5, imagem: "https://www.upperseg.com.br/img/products/automatizador-pivotante-golden-max-peccinin-1-3-hp-com-acionamento-duplo-75cm_1_650.webp" },
+            { codigo: "19451", nome: "Golden Super (Duplo) 220V - 500KG - 1/3 HP - 12 Segundos", pesoMax: 500, hp: "1/3 HP", tempoAbertura: 12, aberturasHora: 60, voltagem: "220", AlturaMax: 2.5, imagem: "https://www.upperseg.com.br/img/products/automatizador-pivotante-golden-max-peccinin-1-3-hp-com-acionamento-duplo-75cm_1_650.webp" },
+            ];
+
+function calcularMotorIdeal() {
+    const peso = document.getElementById('portaoPeso').value;
+    const altura = document.getElementById('portaoAltura').value;
+    const aberturas = document.getElementById('aberturasHora').value;
+    const velocidade = document.getElementById('velocidadeMotor').value;
+    const voltagem = document.getElementById('voltagem').value;
+
+    const resultados = motores.filter(motor => {
+        const matchPeso = peso === "indiferente" || motor.pesoMax >= parseInt(peso);
+        const matchAltura = altura === "indiferente" || motor.AlturaMax >= parseFloat(altura);
+        const matchAberturas = aberturas === "indiferente" || motor.aberturasHora >= parseInt(aberturas);
+        const matchVelocidade = velocidade === "indiferente" || 
+                                 (velocidade === "rapido" ? motor.tempoAbertura <= 12 : motor.tempoAbertura >= 29);
+        const matchVoltagem = voltagem === "indiferente" || motor.voltagem === voltagem;
+
+        return matchPeso && matchAltura && matchAberturas && matchVelocidade && matchVoltagem;
+    }).sort((a, b) => {
+        if (peso !== "indiferente") {
+            const pesoDiffA = a.pesoMax - parseInt(peso);
+            const pesoDiffB = b.pesoMax - parseInt(peso);
+            return pesoDiffA - pesoDiffB;
+        }
+        return 0;
+    });
+
+    if (resultados.length > 0) {
+        const motorIdeal = resultados[0];
+        document.getElementById('motorIdeal').innerText = `Motor Ideal: ${motorIdeal.nome} (Código: ${motorIdeal.codigo})`;
+        document.getElementById('motorImagem').src = motorIdeal.imagem;
+        document.getElementById('motorImagem').style.display = 'block';
+        const outrasOpcoes = resultados.slice(1).map(motor => `<li>${motor.nome} (Código: ${motor.codigo})</li>`).join('');
+        document.getElementById('outrasOpcoes').innerHTML = outrasOpcoes;
+        document.getElementById('mensagemAdicional').innerText = "Observação: Leve em conta que acionadores de 0,45m servem para portões de até 2,5m e acionadores de 0,75m servem para portões de até 3,5m. O sistema vai oferecer todos os tamanhos de acionadores se caso selecionar a opção de 2,5m pois os acionadores de 0,75m também servem para portões de até 3,5m inclusive de 2,5m.";
+        document.getElementById('mensagemAdicional').classList.add('minha-mensagem');
+    } else {
+        document.getElementById('motorIdeal').innerText = "Nenhum motor atende aos critérios selecionados.";
+        document.getElementById('motorImagem').style.display = 'none';
+        document.getElementById('outrasOpcoes').innerHTML = "";
+        document.getElementById('mensagemAdicional').innerText = "";
+    }
+    document.getElementById('resultados').style.display = 'block';
+}
+    </script>
+ <footer class="footer">
+    <div class="footer-content">
+    <p>-</p>
+    <nav class="footer-nav">
+    <a href="https://route66.com.br/departamento/4-automatizador-de-portao/315-motores?subcategorias=1487&marcas=NICE">Catálogo Route 66</a>
+    <a href="https://nice.com.br/automatizadores/portoes-pivotantes/">Catálogo Nice</a>
+    <a href="https://wa.me/551937546662">Dúvidas e Sugestões</a>
+    <a href="motores v2.0.html">Realizar nova consulta</a>
+    </nav>
+    </div>
+</footer>
+</body>
+</html>

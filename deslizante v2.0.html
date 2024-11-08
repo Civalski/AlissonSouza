@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motores Deslizantes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+            width: 80%;
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+        .deslizante-gif {
+            max-width: 35%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        select {
+            width: 50%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .resultados {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .resultados h2, .resultados h3 {
+            margin-bottom: 10px;
+        }
+        .resultados p, .resultados ul {
+            margin-bottom: 10px;
+        }
+        .resultados ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        #motorImagem {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+        .footer-nav a {
+        color: #000000;
+        margin: 0 10px;
+        text-decoration: none;
+        }
+        .footer-nav a:hover {
+        text-decoration: underline;
+        }
+        .footer-content {
+        color: white
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://mehbud.com.ua/wp-content/uploads/2020/01/%D0%92%D1%96%D0%B4%D0%BA%D0%B0%D1%82%D0%BD%D1%96-%D0%A0%D0%B0%D0%BD%D1%87%D0%BE-1.gif" alt="GIF de Deslizante" class="deslizante-gif">
+
+        <!-- Formulário para selecionar parâmetros -->
+        <div class="form-group">
+            <label for="portaoPeso">Peso do Portão (kg):</label>
+            <select id="portaoPeso">
+                <option value="indiferente">Indiferente</option>
+                <option value="300">300kg</option>
+                <option value="400">400kg</option>
+                <option value="500">500kg</option>
+                <option value="600">600kg</option>
+                <option value="800">800kg</option>
+                <option value="1800">1800kg</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="aberturasHora">Aberturas por Hora:</label>
+            <select id="aberturasHora">
+                <option value="indiferente">Indiferente</option>
+                <option value="15">15 ciclos por hora</option>
+                <option value="20">20 ciclos por hora</option>
+                <option value="40">40 ciclos por hora</option>
+                <option value="50">50 ciclos por hora</option>
+                <option value="80">80 ciclos por hora</option>
+                <option value="120">120 ciclos por hora</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="tempoAbertura">Tempo de Abertura (s):</label>
+            <select id="tempoAbertura">
+                <option value="indiferente">Indiferente</option>
+                <option value="7">Até 7 segundos (Rápido)</option>
+                <option value="8">Acima de 8 segundos (Normal)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="voltagem">Voltagem:</label>
+            <select id="voltagem">
+                <option value="indiferente">Indiferente</option>
+                <option value="127">127V</option>
+                <option value="220">220V</option>
+            </select>
+        </div>
+        <button onclick="calcularMotorIdeal()">Calcular Motor Ideal</button>
+    
+        <!-- Resultados -->
+        <div id="resultados" class="resultados">
+            <h2 id="motorIdeal"></h2>
+            <img id="motorImagem" src="" alt="Imagem do Motor" style="max-width: 100px; height: auto; display: none;"/>
+            <h3>Outras opções de motores compatíveis:</h3>
+            <ul id="outrasOpcoes"></ul>
+            <p id="mensagemAdicional"></p>
+        </div>
+    
+        <script>
+            const motores = [
+                { codigo: "18100", nome: "Light Standard 220V - 500KG - 1/3 HP - 12 Segundos", pesoMax: 500, hp: "1/3 HP", tempoAbertura: 12, aberturasHora: 40, voltagem: "220", imagem: "https://cdn.route66.com.br/fotos/produtos/18100/250/18100A.webp" },
+                { codigo: "18098", nome: "Gatter 127V - 400KG - 1/4 HP - 10 Segundos", pesoMax: 400, hp: "1/4 HP", tempoAbertura: 10, aberturasHora: 20, voltagem: "127", imagem: "https://cdn.route66.com.br/fotos/produtos/18098/250/18098A.webp" },
+                { codigo: "18111", nome: "Super Standard 220V - 800KG - 1/2 HP - 14 Segundos", pesoMax: 800, hp: "1/2 HP", tempoAbertura: 14, aberturasHora: 80, voltagem: "220", imagem: "https://cdn.route66.com.br/fotos/produtos/18111/250/18111A.webp" },
+                { codigo: "25281", nome: "Kaza 300 Slim 220V - 300KG - 1/4 HP - 12 Segundos", pesoMax: 300, hp: "1/4 HP", tempoAbertura: 12, aberturasHora: 15, voltagem: "220", imagem: "https://cdn.route66.com.br/fotos/produtos/25281/250/25281A.webp" },
+                { codigo: "18101", nome: "Light Standard 127V - 500KG - 1/3 HP - 12 Segundos", pesoMax: 500, hp: "1/3 HP", tempoAbertura: 12, aberturasHora: 40, voltagem: "127", imagem: "https://cdn.route66.com.br/fotos/produtos/18101/250/18101A.webp" },
+                { codigo: "18097", nome: "Gatter 220V - 400KG - 1/4 HP - 10 Segundos", pesoMax: 400, hp: "1/4 HP", tempoAbertura: 10, aberturasHora: 20, voltagem: "220", imagem: "https://cdn.route66.com.br/fotos/produtos/18097/250/18097A.webp" },
+                { codigo: "21151", nome: "Super Standard 127V - 800KG - 1/2 HP - 14 Segundos", pesoMax: 800, hp: "1/2 HP", tempoAbertura: 14, aberturasHora: 80, voltagem: "127", imagem: "https://cdn.route66.com.br/fotos/produtos/21151/250/21151A.webp" },
+                { codigo: "18110", nome: "MAX Industrial 220/380V - 1800KG - 3/4 HP - 12 Segundos", pesoMax: 1800, hp: "3/4 HP", tempoAbertura: 12, aberturasHora: 120, voltagem: "220", imagem: "https://cdn.route66.com.br/fotos/produtos/18110/250/18110A.webp" },
+                { codigo: "18105", nome: "SR 600 I-HS 127/220V - 600KG - 1/2 HP - 5 Segundos", pesoMax: 600, hp: "1/2 HP", tempoAbertura: 5, aberturasHora: 50, voltagem: "127/220", imagem: "https://cdn.route66.com.br/fotos/produtos/18105/250/18105A.webp" },
+            ];
+    
+            function calcularMotorIdeal() {
+                const peso = document.getElementById('portaoPeso').value;
+                const aberturas = document.getElementById('aberturasHora').value;
+                const tempoAbertura = document.getElementById('tempoAbertura').value;
+                const voltagem = document.getElementById('voltagem').value;
+    
+                const resultados = motores.filter(motor => {
+                    const tempoAberturaCorreto = (tempoAbertura === "indiferente") ||
+                        (tempoAbertura === "7" && motor.tempoAbertura <= 7) ||
+                        (tempoAbertura === "8" && motor.tempoAbertura > 7);
+                    const voltagemCorreta = (voltagem === "indiferente") || motor.voltagem.includes(voltagem);
+    
+                    return (peso === "indiferente" || motor.pesoMax >= parseInt(peso)) &&
+                        (aberturas === "indiferente" || motor.aberturasHora >= parseInt(aberturas)) &&
+                        tempoAberturaCorreto &&
+                        voltagemCorreta;
+                }).sort((a, b) => {
+                    if (peso !== "indiferente") {
+                        const pesoDiffA = a.pesoMax - parseInt(peso);
+                        const pesoDiffB = b.pesoMax - parseInt(peso);
+                        return pesoDiffA - pesoDiffB;
+                    }
+                    return 0;
+                });
+    
+                if (resultados.length > 0) {
+                    const motorIdeal = resultados[0];
+                    document.getElementById('motorIdeal').innerText = `Motor Ideal: ${motorIdeal.nome} (Código: ${motorIdeal.codigo})`;
+                    document.getElementById('motorImagem').src = motorIdeal.imagem;
+                    document.getElementById('motorImagem').style.display = 'block';
+                    const outrasOpcoes = resultados.slice(1).map(motor => `<li>${motor.nome} (Código: ${motor.codigo})</li>`).join('');
+                    document.getElementById('outrasOpcoes').innerHTML = outrasOpcoes;
+                } else {
+                    document.getElementById('motorIdeal').innerText = "Nenhum motor atende aos critérios selecionados.";
+                    document.getElementById('motorImagem').style.display = 'none';
+                    document.getElementById('outrasOpcoes').innerHTML = "";
+                    document.getElementById('mensagemAdicional').innerText = "";
+                }
+                document.getElementById('resultados').style.display = 'block';
+            }
+        </script>
+        <footer class="footer">
+            <div class="footer-content">
+            <p>-</p>
+            <nav class="footer-nav">
+            <a href="https://route66.com.br/departamento/4-automatizador-de-portao/315-motores?subcategorias=1486&marcas=NICE">Catálogo Route 66</a>
+            <a href="https://nice.com.br/automatizadores/portoes-deslizantes/">Catálogo Nice</a>
+            <a href="https://wa.me/551937546662">Dúvidas e Sugestões</a>
+            <a href="motores v2.0.html">Realizar nova consulta</a>
+            </nav>
+            </div>
+     </footer>
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motores Basculantes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+            width: 80%;
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+        .basculante-gif {
+            max-width: 50%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        select {
+            width: 50%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .resultados {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .resultados h2, .resultados h3 {
+            margin-bottom: 10px;
+        }
+        .resultados p, .resultados ul {
+            margin-bottom: 10px;
+        }
+        .resultados ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        #motorImagem {
+            max-width: 10%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+        .footer-nav a {
+        color: #000000;
+        margin: 0 10px;
+        text-decoration: none;
+        }
+        .footer-nav a:hover {
+        text-decoration: underline;
+        }
+        .footer-content {
+        color: white
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://d2t1xqejof9utc.cloudfront.net/screenshots/pics/08629a0571e38db8f669a0925eb185c7/large.gif" alt="GIF de Basculante" class="basculante-gif">
+        <div class="form-group">
+            <label for="portaoPeso">Peso do Portão (kg):</label>
+            <select id="portaoPeso">
+                <option value="indiferente">Indiferente</option>
+                <option value="300">300kg</option>
+                <option value="350">350kg</option>
+                <option value="400">400kg</option>
+                <option value="450">450kg</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="portaoAltura">Altura do Portão (M):</label>
+            <select id="portaoAltura">
+                <option value="indiferente">Indiferente</option>
+                <option value="2.4">2,40 metros</option>
+                <option value="2.7">2,70 metros</option>
+                <option value="3.5">3,50 metros</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="aberturasHora">Aberturas por Hora:</label>
+            <select id="aberturasHora">
+                <option value="indiferente">Indiferente</option>
+                <option value="20">20 ciclos por hora</option>
+                <option value="60">60 ciclos por hora</option>
+                <option value="100">100 ciclos por hora</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="velocidadeMotor">Velocidade do Motor:</label>
+            <select id="velocidadeMotor">
+                <option value="indiferente">Indiferente</option>
+                <option value="rapido">Rápido (até 7 segundos)</option>
+                <option value="normal">Normal (acima de 8 segundos)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="voltagem">Voltagem:</label>
+            <select id="voltagem">
+                <option value="indiferente">Indiferente</option>
+                <option value="127">127V</option>
+                <option value="220">220V</option>
+            </select>
+        </div>
+        <button onclick="calcularMotorIdeal()">Calcular Motor Ideal</button>
+        <div id="resultados" class="resultados">
+            <h2 id="motorIdeal"></h2>
+            <img id="motorImagem" src="" alt="Imagem do Motor Ideal">
+            <h3>Outras opções de motores compatíveis:</h3>
+            <ul id="outrasOpcoes"></ul>
+            <p id="mensagemAdicional"></p>
+        </div>
+    </div>
+    <script>
+        const motores = [
+            {
+                codigo: "25506",
+                nome: "Basculante BV2000 Flash 220V - 350KG - 1/3 HP - 9 Segundos",
+                pesoMax: 350,
+                hp: "1/3 HP",
+                tempoAbertura: 9,
+                aberturasHora: 60,
+                bracoAcionador: 2.25,
+                alturaMax: 3.5,
+                imagem: "https://nice.com.br/novo2017/wp-content/uploads/2017/12/bv-gatter-02.png",
+                voltagem: 220,
+            },
+            {
+                codigo: "23082",
+                nome: "Basculante Bravo Standard 127V - 400KG - 1/3 HP - 8 Segundos",
+                pesoMax: 400,
+                hp: "1/3 HP",
+                tempoAbertura: 8,
+                aberturasHora: 60,
+                bracoAcionador: 1.25,
+                alturaMax: 2.4,
+                imagem: "https://http2.mlstatic.com/D_NQ_NP_985031-MLB53883191885_022023-O.webp",
+                voltagem: 127,
+            },
+            {
+                codigo: "23084",
+                nome: "Basculante Bravo Standard 220V - 400KG - 1/3 HP - 8 Segundos",
+                pesoMax: 400,
+                hp: "1/3 HP",
+                tempoAbertura: 8,
+                aberturasHora: 60,
+                bracoAcionador: 1.25,
+                alturaMax: 2.4,
+                imagem: "https://http2.mlstatic.com/D_NQ_NP_985031-MLB53883191885_022023-O.webp",
+                voltagem: 220,
+            },
+            {
+                codigo: "21994",
+                nome: "Basculante Bravo I-HS 127/220V - 400KG - 1/3 HP - 4 Segundos",
+                pesoMax: 400,
+                hp: "1/3 HP",
+                tempoAbertura: 4,
+                aberturasHora: 60,
+                bracoAcionador: 1.25,
+                alturaMax: 2.4,
+                imagem: "https://nice.com.br/novo2017/wp-content/uploads/2020/05/destaque-produto.png",
+                voltagem: "127/220",
+            },
+            {
+                codigo: "22200",
+                nome: "Basculante Bravo I-HSC 127/220 - 450KG - 1/2 HP - 4 Segundos",
+                pesoMax: 450,
+                hp: "1/2 HP",
+                tempoAbertura: 4,
+                aberturasHora: 100,
+                bracoAcionador: 1.25,
+                alturaMax: 2.4,
+                imagem: "https://nice.com.br/novo2017/wp-content/uploads/2020/02/open-tech-azul-600x476.png",
+                voltagem: "127/220",
+            },
+            {
+                codigo: "18099",
+                nome: "Basculante Gatter 220v - 300KG - 1/4 HP - 8 Segundos",
+                pesoMax: 301,
+                hp: "1/4 HP",
+                tempoAbertura: 8,
+                aberturasHora: 20,
+                bracoAcionador: 1.25,
+                alturaMax: 2.4,
+                imagem: "https://nice.com.br/novo2017/wp-content/uploads/2017/12/bv-gatter-02.png",
+                voltagem: 220,
+            },
+            {
+                codigo: "19437",
+                nome: "Basculante Gatter 127V - 300KG - 1/4 HP - 8 Segundos",
+                pesoMax: 301,
+                hp: "1/4 HP",
+                tempoAbertura: 8,
+                aberturasHora: 20,
+                bracoAcionador: 1.25,
+                alturaMax: 2.4,
+                imagem: "https://nice.com.br/novo2017/wp-content/uploads/2017/12/bv-gatter-02.png",
+                voltagem: 127,
+            },
+            {
+                codigo: "21184",
+                nome: "Basculante Gatter 127V - 300KG - 1/4 HP - 8 Segundos",
+                pesoMax: 301,
+                hp: "1/4 HP",
+                tempoAbertura: 8,
+                aberturasHora: 20,
+                bracoAcionador: 1.5,
+                alturaMax: 2.7,
+                imagem: "https://nice.com.br/novo2017/wp-content/uploads/2017/12/bv-gatter-02.png",
+                voltagem: 127,
+            },
+            {
+                codigo: "23081",
+                nome: "Basculante Gatter 220V - 300KG - 1/4 HP - 8 Segundos",
+                pesoMax: 301,
+                hp: "1/4 HP",
+                tempoAbertura: 8,
+                aberturasHora: 20,
+                bracoAcionador: 1.5,
+                alturaMax: 2.7,
+                imagem: "https://nice.com.br/novo2017/wp-content/uploads/2017/12/bv-gatter-02.png",
+                voltagem: 220,
+            },
+            {
+                codigo: "19440",
+                nome: "Basculante F2000 220V - 350KG - 1/3 HP - 13 Segundos",
+                pesoMax: 350,
+                hp: "1/3 HP",
+                tempoAbertura: 13,
+                aberturasHora: 60,
+                bracoAcionador: 1.25,
+                alturaMax: 2.4,
+                imagem: "https://nice.com.br/novo2017/wp-content/uploads/2017/12/bv-gatter-02.png",
+                voltagem: 220,
+            },
+            {
+                codigo: "19441",
+                nome: "Basculante F2000 127V - 350KG - 1/3 HP - 13 Segundos",
+                pesoMax: 350,
+                hp: "1/3 HP",
+                tempoAbertura: 13,
+                aberturasHora: 60,
+                bracoAcionador: 1.25,
+                alturaMax: 2.4,
+                imagem: "https://nice.com.br/novo2017/wp-content/uploads/2017/12/bv-gatter-02.png",
+                voltagem: 127,
+            },
+            {
+                codigo: "19445",
+                nome: "Basculante BV2000 Flash 127V - 350KG - 1/3 HP - 9 Segundos",
+                pesoMax: 350,
+                hp: "1/3 HP",
+                tempoAbertura: 9,
+                aberturasHora: 60,
+                bracoAcionador: 1.5,
+                alturaMax: 2.7,
+                imagem: "https://nice.com.br/novo2017/wp-content/uploads/2017/12/bv-gatter-02.png",
+                voltagem: 127,
+            },
+            {
+                codigo: "23077",
+                nome: "Basculante BV2000 Flash 220V - 350KG - 1/3 HP - 9 Segundos",
+                pesoMax: 350,
+                hp: "1/3 HP",
+                tempoAbertura: 9,
+                aberturasHora: 60,
+                bracoAcionador: 1.5,
+                alturaMax: 2.7,
+                imagem: "https://nice.com.br/novo2017/wp-content/uploads/2017/12/bv-gatter-02.png",
+                voltagem: 220,
+            },
+            {
+                codigo: "18109",
+                nome: "Basculante BV2000 Flash 127V - 350KG - 1/3 HP - 7 Segundos",
+                pesoMax: 350,
+                hp: "1/3 HP",
+                tempoAbertura: 7,
+                aberturasHora: 60,
+                bracoAcionador: 1.25,
+                alturaMax: 2.4,
+                imagem: "https://nice.com.br/novo2017/wp-content/uploads/2017/12/bv-gatter-02.png",
+                voltagem: 127,
+            }
+        ];
+            //getelementarybyid
+        function calcularMotorIdeal() {
+            const peso = document.getElementById('portaoPeso').value;
+            const altura = document.getElementById('portaoAltura').value;
+            const aberturas = document.getElementById('aberturasHora').value;
+            const velocidade = document.getElementById('velocidadeMotor').value;
+            const voltagem = document.getElementById('voltagem').value;
+
+            // filter
+            const resultados = motores.filter(motor => {
+                const matchPeso = peso === "indiferente" || motor.pesoMax >= parseInt(peso);
+                const matchAltura = altura === "indiferente" || motor.alturaMax >= parseFloat(altura);
+                const matchAberturas = aberturas === "indiferente" || motor.aberturasHora >= parseInt(aberturas);
+                const matchVelocidade = velocidade === "indiferente" || (velocidade === "rapido" ? motor.tempoAbertura <= 7 : motor.tempoAbertura > 7);
+                const matchVoltagem = voltagem === "indiferente" || motor.voltagem === parseInt(voltagem) || motor.voltagem === "127/220";
+
+            // sort
+                return matchPeso && matchAltura && matchAberturas && matchVelocidade && matchVoltagem;
+            }).sort((a, b) => {
+                if (peso !== "indiferente") {
+                    const pesoDiffA = a.pesoMax - parseInt(peso);
+                    const pesoDiffB = b.pesoMax - parseInt(peso);
+                    return pesoDiffA - pesoDiffB;
+                }
+                return 0;
+            });
+            if (resultados.length > 0) {
+                const motorIdeal = resultados[0];
+                document.getElementById('motorIdeal').innerText = `Motor Ideal: ${motorIdeal.nome} (Código: ${motorIdeal.codigo})`;
+                document.getElementById('motorImagem').src = motorIdeal.imagem;
+                document.getElementById('motorImagem').style.display = 'block';
+                const outrasOpcoes = resultados.slice(1).map(motor => `<li>${motor.nome} (Código: ${motor.codigo})</li>`).join('');
+                document.getElementById('outrasOpcoes').innerHTML = outrasOpcoes;
+                document.getElementById('mensagemAdicional').innerText = "Observação: Em caso de portões com largura superior a 4,5m - é recomendado a utilização de 2 motores basculantes, um para cada lado do portão, afim de manter contra-peso (equilibrio) adequado para bom funcionamento e longevidade dos motores. Ao utilizar 2 motores, o peso do portão pode ser o dobro da capacidade de força de cada motor individual. Exemplo: 2 Gatter´s que suportam 300kg cada, juntos vão suportar um portão de 600kg.";
+            } else {
+                document.getElementById('motorIdeal').innerText = "Nenhum motor atende aos critérios selecionados.";
+                document.getElementById('motorImagem').style.display = 'none';
+                document.getElementById('outrasOpcoes').innerHTML = "";
+                document.getElementById('mensagemAdicional').innerText = "";
+            }
+            document.getElementById('resultados').style.display = 'block';
+        }
+    </script>
+<footer class="footer">
+        <div class="footer-content">
+        <p>-</p>
+        <nav class="footer-nav">
+        <a href="https://route66.com.br/departamento/4-automatizador-de-portao/315-motores?subcategorias=1485&marcas=NICE">Catálogo Route 66</a>
+        <a href="https://nice.com.br/automatizadores/portoes-basculantes/">Catálogo Nice</a>
+        <a href="https://wa.me/551937546662">Dúvidas e Sugestões</a>
+        <a href="motores v2.0.html">Realizar nova consulta</a>
+        </nav>
+        </div>
+</footer>
+</body>
+</html>
