@@ -90,11 +90,11 @@
     </style>
 </head>
 
-<body>
+<body> 
     <div class="container">
-        <h1>Calculadora de Orçamento de Cerca Elétrica</h1>
+        <h1>Dimensionar Cerca Elétrica</h1>
 
-        <form id="budget-form">
+        <form id="budget-form" onsubmit="event.preventDefault(); calculateBudget();">
             <label for="wall-length">Quantos metros de muro?</label>
             <input type="number" id="wall-length" name="wall-length" min="1" required>
 
@@ -111,11 +111,14 @@
                 <option value="177">0,90mm 177 metros</option>
             </select>
 
-            <label for="shock-central">Tipo de Haste</label>
-            <select id="shock-central" name="shock-central" required>
-                <option value="13096"></option>
-                <option value="22615"></option>
-                <option value="24925"></option>
+            <label for="haste-type">Tipo de Haste</label>
+            <select id="haste-type" name="haste-type" required>
+                <option value="25124">Power haste 75cm 4 isoladores</option>
+                <option value="17895">Power haste 1m 6 isoladores</option>
+                <option value="17913">Haste barra chata 4 isoladores</option>
+                <option value="22454">Haste barra chata 6 isoladores</option>
+                <option value="17890">Haste estrela 4 isoladores</option>
+                <option value="20079">Haste estrela 6 isoladores</option>
             </select>
 
             <button type="button" onclick="calculateBudget()">Calcular Orçamento</button>
@@ -129,33 +132,22 @@
             const wallLength = parseFloat(document.getElementById('wall-length').value);
             const postInterval = parseFloat(document.getElementById('post-interval').value);
             const wireType = parseFloat(document.getElementById('wire-type').value);
-            const shockCentralEl = document.getElementById('shock-central');
+            const hasteTypeEl = document.getElementById('haste-type');
 
             const totalPosts = Math.ceil(wallLength / postInterval);
             const totalWireLength = wallLength;
 
-            for (let i = 0; i < shockCentralEl.options.length; i++) {
-                shockCentralEl.options[i].disabled = false;
-            }
-
-            for (let i = 0; i < shockCentralEl.options.length; i++) {
-                const maxWireSupported = parseFloat(shockCentralEl.options[i].value);
-                if (totalWireLength > maxWireSupported) {
-                    shockCentralEl.options[i].disabled = true;
-                }
-            }
-
             const totalReelsNeeded = Math.ceil(totalWireLength / wireType);
 
             const wireTypeText = document.getElementById('wire-type').selectedOptions[0].text;
-            const shockCentralText = shockCentralEl.selectedOptions[0].text;
+            const hasteTypeText = hasteTypeEl.selectedOptions[0].text;
 
             const wireTypeCode = {
                 "0,60mm 378 metros": "14686",
                 "0,90mm 177 metros": "14687"
             }[wireTypeText];
 
-            const shockCentralCode = shockCentralEl.value;
+            const hasteTypeCode = hasteTypeEl.value;
 
             const items = [
                 { name: 'Barra de aterramento', observation: '20167' },
@@ -165,9 +157,8 @@
                 { name: 'Placa de aviso perigo', observation: '20166' },
                 { name: 'Sirene', observation: '17814' },
                 { name: 'Base da Power Haste', observation: '19606' },
-                { name: `Power Haste 1m 12 isoladores (${totalPosts} unidades)`, observation: '22915' },
-                { name: `${wireTypeText} (${totalReelsNeeded} bobinas)`, observation: wireTypeCode },
-                { name: shockCentralText, observation: shockCentralCode }
+                { name: `${hasteTypeText} (${totalPosts} unidades)`, observation: hasteTypeCode },
+                { name: `${wireTypeText} (${totalReelsNeeded} bobinas)`, observation: wireTypeCode }
             ];
 
             let resultText = `
@@ -189,5 +180,3 @@
         }
     </script>
 </body>
-
-</html>
