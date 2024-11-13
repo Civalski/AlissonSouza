@@ -104,17 +104,17 @@
                 <option value="3">3 metros</option>
             </select>
 
-            <label for="wire-type">Tipo de Fio de Aço</label>
-            <select id="wire-type" name="wire-type" required>
-                <option value="348">0,45mm 348 metros</option>
-                <option value="378">0,60mm 378 metros</option>
-                <option value="177">0,90mm 177 metros</option>
+            <label for="wire-choice">Qual fio de aço deseja utilizar?</label>
+            <select id="wire-choice" name="wire-choice" required>
+                <option value="14564">Fio de aço 0,90mm</option>
+                <option value="14686">Fio de aço 0,60mm</option>
+                <option value="14687">Fio de aço 0,45mm</option>
             </select>
 
             <label for="haste-type">Tipo de Haste</label>
             <select id="haste-type" name="haste-type" required>
-                <option value="25124">Power haste 75cm 4 isoladores</option>
-                <option value="17895">Power haste 1m 6 isoladores</option>
+                <option value="25124">Power haste 4 isoladores</option>
+                <option value="17895">Power haste 6 isoladores</option>
                 <option value="17913">Haste barra chata 4 isoladores</option>
                 <option value="22454">Haste barra chata 6 isoladores</option>
                 <option value="17890">Haste estrela 4 isoladores</option>
@@ -131,23 +131,13 @@
         function calculateBudget() {
             const wallLength = parseFloat(document.getElementById('wall-length').value);
             const postInterval = parseFloat(document.getElementById('post-interval').value);
-            const wireType = parseFloat(document.getElementById('wire-type').value);
+            const wireChoiceEl = document.getElementById('wire-choice');
+            const wireChoiceText = wireChoiceEl.selectedOptions[0].text;
+            const wireChoiceCode = wireChoiceEl.value;
             const hasteTypeEl = document.getElementById('haste-type');
-
-            const totalPosts = Math.ceil(wallLength / postInterval);
-            const totalWireLength = wallLength;
-
-            const totalReelsNeeded = Math.ceil(totalWireLength / wireType);
-
-            const wireTypeText = document.getElementById('wire-type').selectedOptions[0].text;
             const hasteTypeText = hasteTypeEl.selectedOptions[0].text;
 
-            const wireTypeCode = {
-                "0,60mm 378 metros": "14686",
-                "0,90mm 177 metros": "14687"
-            }[wireTypeText];
-
-            const hasteTypeCode = hasteTypeEl.value;
+            const totalPosts = Math.ceil(wallLength / postInterval);
 
             const items = [
                 { name: 'Barra de aterramento', observation: '20167' },
@@ -157,8 +147,8 @@
                 { name: 'Placa de aviso perigo', observation: '20166' },
                 { name: 'Sirene', observation: '17814' },
                 { name: 'Base da Power Haste', observation: '19606' },
-                { name: `${hasteTypeText} (${totalPosts} unidades)`, observation: hasteTypeCode },
-                { name: `${wireTypeText} (${totalReelsNeeded} bobinas)`, observation: wireTypeCode }
+                { name: `${hasteTypeText} (${totalPosts} unidades)`, observation: hasteTypeEl.value },
+                { name: `${wireChoiceText}`, observation: wireChoiceCode }
             ];
 
             let resultText = `
@@ -180,3 +170,5 @@
         }
     </script>
 </body>
+
+</html>
