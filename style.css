@@ -41,6 +41,7 @@ body {
     transition: width 0.3s ease-in-out;
     z-index: 999;
     overflow: hidden;
+    overflow-y: auto;
 }
 
 .sidebar:hover {
@@ -136,7 +137,7 @@ main {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
-    overflow: auto
+    overflow: auto;
 }
 
 .post {
@@ -146,6 +147,12 @@ main {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
     color: black;
+}
+
+a:hover {
+    text-decoration:none;
+    font-size: 102%;
+    text-shadow: 2px 2px 4px rgb(229, 229, 229); /* Adiciona uma sombra ao texto */
 }
 
 .post:hover {
