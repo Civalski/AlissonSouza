@@ -28,7 +28,7 @@ body {
 
 .header img {
     max-width: 115px;
-    height: fixed;
+    height: flex;
 }
 
 .sidebar {
@@ -134,7 +134,7 @@ main {
 
 .post-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
     overflow: auto
 }
@@ -149,7 +149,7 @@ main {
 }
 
 .post:hover {
-    transform: translateY(-3px);
+    transform: translateY(-5px);
 }
 
 .post img {
