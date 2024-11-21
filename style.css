@@ -152,7 +152,7 @@ main {
 a:hover {
     text-decoration:none;
     font-size: 102%;
-    text-shadow: 2px 2px 4px rgb(229, 229, 229); /* Adiciona uma sombra ao texto */
+    text-shadow: 2px 2px 4px rgb(229, 229, 229);
 }
 
 .post:hover {
@@ -164,4 +164,12 @@ a:hover {
     height: 180px;
     border-radius: 10px;
     width: 200px;
+}
+h2 {
+    font-size: 20px;
+    color: #2c2c2c;
+    border-bottom: px solid #b5b4b4;
+    padding-bottom: 5px;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
 }
