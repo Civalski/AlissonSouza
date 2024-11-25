@@ -1,120 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ferramentas do Vendedor</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-  body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f5f5f7;
-    color: #1d1d1f;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    justify-content: center;
-    align-items: center;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferramentas do Vendedor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
 
-  .header {
-    width: 100%;
-    height: 70px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #ffffffcc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-  }
+    .header {
+      width: 100%;
+      height: 70px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffffffcc;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
 
-  .header img {
-    max-height: 240px;
-  }
+    .header img {
+      max-height: 240px;
+    }
 
-  .login-container {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 360px;
-    text-align: center;
-  }
-
-  .login-container h2 {
-    margin-bottom: 20px;
-    color: #1d1d1f;
-    font-size: 28px;
-    font-weight: 500;
-  }
-
-  .login-container label {
-    display: block;
-    margin: 12px 0 6px;
-    font-size: 14px;
-    color: #6e6e73;
-    text-align: left;
-  }
-
-  .login-container input[type="text"],
-  .login-container input[type="password"] {
-    width: 100%;
-    padding: 14px;
-    margin-bottom: 20px;
-    border: 1px solid #d2d2d7;
-    border-radius: 8px;
-    font-size: 16px;
-    background: #f5f5f7;
-    color: #1d1d1f;
-    transition: border 0.3s ease;
-  }
-
-  .login-container input[type="text"]:focus,
-  .login-container input[type="password"]:focus {
-    border-color: #0071e3;
-    outline: none;
-  }
-
-  .login-container button {
-    padding: 14px 20px;
-    background-color: #939191;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 40%;
-  }
-
-  .login-container button:hover {
-    background-color: rgb(75, 212, 68);
-  }
-
-  #mensagem {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #d70015;
-  }
-
-  @media (max-width: 480px) {
     .login-container {
-      padding: 20px;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
     }
 
     .login-container h2 {
-      font-size: 24px;
+      margin-bottom: 20px;
+      color: #1d1d1f;
+      font-size: 28px;
+      font-weight: 500;
     }
-  }
-</style>
+
+    .login-container label {
+      display: block;
+      margin: 12px 0 6px;
+      font-size: 14px;
+      color: #6e6e73;
+      text-align: left;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 20px;
+      border: 1px solid #d2d2d7;
+      border-radius: 8px;
+      font-size: 16px;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      transition: border 0.3s ease;
+    }
+
+    .login-container input[type="text"]:focus,
+    .login-container input[type="password"]:focus {
+      border-color: #0071e3;
+      outline: none;
+    }
+
+    .login-container button {
+      padding: 14px 20px;
+      background-color: #939191;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 40%;
+    }
+
+    .login-container button:hover {
+      background-color: rgb(75, 212, 68);
+    }
+
+    #mensagem {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #d70015;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 20px;
+      }
+
+      .login-container h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <div class="header">
     <img src="https://i.ibb.co/j3yNZdB/logoc1.png" alt="Logo">
@@ -132,6 +134,9 @@
     </form>
     <div id="mensagem"></div>
   </div>
-<script src="script.js"></script>
+  <Script Language='Javascript'>
+    document.write(unescape('%3C%73%63%72%69%70%74%20%73%72%63%3D%22%73%63%72%69%70%74%2E%6A%73%22%3E%3C%2F%73%63%72%69%70%74%3E'));
+  </Script>
 </body>
+
 </html>

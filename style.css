@@ -38,7 +38,6 @@ body {
     width: 80px;
     height: calc(100% - 70px);
     background-color: #fff;
-    transition: width 0.3s ease-in-out;
     z-index: 999;
     overflow: hidden;
     overflow-y: auto;
@@ -46,6 +45,7 @@ body {
 
 .sidebar:hover {
     width: 220px;
+    transition: width 0.5s initial;
 }
 
 .sidebar a {
@@ -136,7 +136,7 @@ main {
 .post-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+    gap: 10px;
     overflow: auto;
 }
 
@@ -144,7 +144,7 @@ main {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: #333;
     transition: transform 0.2s ease;
     color: black;
 }
@@ -172,4 +172,7 @@ h2 {
     padding-bottom: 5px;
     margin: 20px 0;
     font-family: Arial, sans-serif;
+}
+.h2text {
+    font-size: 20px;
 }
