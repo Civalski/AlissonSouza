@@ -18,7 +18,7 @@ body {
     padding: 20px 0;
     text-align: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    position: auto;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
@@ -41,11 +41,11 @@ body {
     z-index: 999;
     overflow: hidden;
     overflow-y: auto;
+    
 }
 
 .sidebar:hover {
     width: 220px;
-    transition: width 0.5s initial;
 }
 
 .sidebar a {
